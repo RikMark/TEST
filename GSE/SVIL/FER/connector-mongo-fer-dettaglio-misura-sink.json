@@ -1,0 +1,39 @@
+{
+  "name": "mongo-fer-dettaglio-misura-sink-v3",
+  "config": {
+    "connector.class": "org.hifly.kafka.mongo.sink.CustomMongoSinkConnector",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "transforms": "TimestampConverter1, TimestampConverter2, TimestampConverter3",
+    "errors.tolerance": "all",
+    "topics": "FER_DETTAGLIO_MISURA_PERIMETRO_JSON", 
+    "errors.deadletterqueue.topic.name": "dlq-mongo-dettaglio-misura",
+    "errors.deadletterqueue.topic.replication.factor": "1",
+    "errors.deadletterqueue.context.headers.enable": "true",
+    "transforms.TimestampConverter1.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.TimestampConverter1.target.type": "Timestamp",
+    "transforms.TimestampConverter1.field": "periodo",
+    "transforms.TimestampConverter1.format": "yyyy-MM-dd'T'HH:mm:ss",
+    "transforms.TimestampConverter2.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.TimestampConverter2.target.type": "Timestamp",
+    "transforms.TimestampConverter2.field": "dataMisuraRif",
+    "transforms.TimestampConverter2.format": "yyyy-MM-dd'T'HH:mm:ss",
+    "transforms.TimestampConverter3.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.TimestampConverter3.target.type": "Timestamp",
+    "transforms.TimestampConverter3.field": "dataAggiornamento",
+    "transforms.TimestampConverter3.format": "yyyy-MM-dd'T'HH:mm:ss",
+    "doc.array.field.name": "misure",
+    "transforms.HoistKey.type": "org.apache.kafka.connect.transforms.HoistField$Key",
+    "database": "Misure",
+    "doc.id.name": "_id",
+    "collection": "misure-dettaglio",
+<<<<<<< Updated upstream
+    "transforms.HoistKey.field": "_id",
+=======
+>>>>>>> Stashed changes
+    "key.converter.schemas.enable": "false",
+    "doc.array.field.dedup.keys": "ts,tipoOra",
+    "connection.uri": "mongodb://root:r00tsvil2021!@svilmongodb.colrisorse.int:27017/admin?retryWrites=false&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-256&tls=false&directConnection=true",
+    "value.converter.schemas.enable": "false"
+  }
+}
