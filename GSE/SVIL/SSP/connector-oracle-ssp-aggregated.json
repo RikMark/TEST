@@ -1,0 +1,32 @@
+{
+	"name": "oracle-cdc-ssp-v1",
+	"config": {
+		"connector.class": "io.confluent.connect.oracle.cdc.OracleCdcSourceConnector",
+		"key.converter": "org.hifly.kafka.ByteArrayAndStringConverter",
+		"value.converter": "org.apache.kafka.connect.json.JsonConverter",
+		"oracle.server": "svil19db.colrisorse.int",
+		"oracle.port": "1521",
+		"oracle.sid": "SVIL19DB",
+		"oracle.username": "CFLTCONN",
+		"oracle.password": "CFLTCONN",
+		"start.from": "force_current",
+		"redo.log.topic.name": "redo_ssp",
+		"redo.log.consumer.bootstrap.servers": "svilcfltbrk1.colrisorse.int:9092, svilcfltbrk2.colrisorse.int:9092, svilcfltbrk3.colrisorse.int:9092",
+		"redo.log.consumer.security.protocol": "SASL_PLAINTEXT",
+		"redo.log.consumer.sasl.mechanism": "PLAIN",
+		"redo.log.consumer.sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username='kafka-connect' password='xFpZlkW0spSLGHZJFoI=';",
+		"numeric.mapping": "best_fit_or_string",
+		"emit.tombstone.on.delete": "true",
+		"behavior.on.unparsable.statement": "log",
+		"oracle.date.mapping": "timestamp",
+		"table.inclusion.regex": "SVIL19DB.SSP.(SSP_CONVENZIONI|SSP_TESTATA_MISURE|SSP_DATI_CENSIMP|SSP_REL_PROD_CONV|SSP_RIEP_ACQ_DATI_GR|SSP_SC_DATI_IMPIANTO_DETT|SSP_STATI_ISTANZA|SSP_SYN_GESTORI_RETE)",
+		"topic.creation.default.partitions": "1",
+		"topic.creation.redo.partitions": "1",
+		"topic.creation.redo.include": "redo_ssp",
+		"topic.creation.default.replication.factor": "3",
+		"topic.creation.redo.replication.factor": "1",
+		"topic.creation.enable": "true",
+		"key.converter.schemas.enable": "false",
+		"value.converter.schemas.enable": "false"
+	}
+}
