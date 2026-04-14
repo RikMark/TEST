@@ -1,0 +1,19 @@
+{
+  "name": "mongo-query-source-json-2025-8-v21",
+  "config": {
+    "connector.class": "org.hifly.kafka.mongo.source.MongoQuerySourceConnector",
+    "tasks.max": "1",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "topic": "RID_ISTANZE_MISURE_IMPIANTI_OPERATORE_PERIMETRO_DET",
+    "mongo.uri": "mongodb://dluser:dlusercol!2024@colmongodbdl01.colrisorse.int:27017,colmongodbdl02.colrisorse.int:27017,colmongodbdl03.colrisorse.int:27017/Datalake?retryWrites=true&replicaSet=dtlake-coll&readPreference=primary&connectTimeoutMS=10000&authSource=admin",
+    "mongo.database": "Datalake",
+    "mongo.collection": "misure",
+    "mongo.pipeline": "[ { \"$lookup\": { \"from\": \"misure-dettaglio\", \"localField\": \"dettaglioMisuraRif\", \"foreignField\": \"dettaglioMisuraRif\", \"as\": \"d\", \"pipeline\": [ { \"$limit\": 1 } ] } }, { \"$match\": { \"d\": { \"$size\": 0 }, \"isInviata\": \"Y\", \"annoRif\": 2025, \"meseRif\": 8 } }, { \"$project\": { \"_id\": 0, \"ID_TESTATA\": { \"$concat\": [ \"$_id\", \"-DET\" ] }, \"DATA_INIZIO_MESE\": { \"$dateToString\": { \"format\": \"%Y-%m-%d\", \"date\": \"$dataMisuraRif\" } }, \"MISURARIF_UTILIZZATA\": { \"$substr\": [ \"$dettaglioMisuraRif\", 4, { \"$strLenCP\": \"$dettaglioMisuraRif\" } ] } } } ]",
+    "mongo.key.field": "MISURARIF_UTILIZZATA",
+    "time.field": "dataAggiornamento",
+    "poll.interval.ms": "240000",
+    "output.format": "json",
+    "key.converter.schemas.enable": "false"
+  }
+}
