@@ -1,0 +1,23 @@
+{
+	"name": "jdbc-cdc-testata-misura-fer-v2",
+	"config": {
+		"connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+		"key.converter": "org.apache.kafka.connect.json.JsonConverter",
+		"transforms": "createKey, nestKey",
+		"transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+		"transforms.createKey.fields": "DETTAGLIO_MISURA_RIF",
+		"transforms.nestKey.type": "org.apache.kafka.connect.transforms.ReplaceField$Key",
+		"transforms.nestKey.renames": "DETTAGLIO_MISURA_RIF:testataId",
+		"connection.url": "jdbc:oracle:thin:@//COLRIDDB.COLRISORSE.INT:1521/CRID19DB",
+		"connection.user": "FER_ELE",
+		"connection.password": "FER_ELE",
+		"table.whitelist": "CDC_TESTATA_MISURA",
+		"numeric.mapping": "best_fit",
+		"dialect.name": "OracleDatabaseDialect",
+		"mode": "incrementing",							 
+        "incrementing.column.name": "ID_TESTATA",											 
+		"poll.interval.ms": "8000",
+		"topic.prefix": "FER.",
+		"key.converter.schemas.enable": "false"							   
+	}
+}
