@@ -1,0 +1,30 @@
+{
+  "name": "jdbc-source-cdc-testata-misura-rid-v3",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "transforms": "createKey, nestKey",
+    "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.createKey.fields": "DETTAGLIO_MISURA_RIF",
+    "transforms.nestKey.type": "org.apache.kafka.connect.transforms.ReplaceField$Key",
+    "transforms.nestKey.renames": "DETTAGLIO_MISURA_RIF:testataId",
+    "connection.url": "jdbc:oracle:thin:@//riddbab-scan.risorse.int:1521/RACC",
+    "connection.user": "RID",
+    "connection.password": "oracolo",
+    "table.whitelist": "CDC_TESTATA_MISURA",
+    "numeric.mapping": "best_fit",
+    "dialect.name": "OracleDatabaseDialect",
+    "mode": "incrementing",
+    "incrementing.column.name": "ID_TESTATA",
+    "poll.interval.ms": "86400000",
+    "topic.prefix": "RID.",
+    "key.converter.schemas.enable": "false",
+    "principal.service.name": "confluent_admin",
+    "principal.service.password": "!Aotd7K1lw0g5@z48wo)kK6%5IC-l#CKH*%",
+    "value.converter.schema.registry.basic.auth.user.info": "confluent_admin:!Aotd7K1lw0g5@z48wo)kK6%5IC-l#CKH*%",
+    "value.converter.schema.registry.ssl.truststore.password": "Passw0rd.01Confluent",
+    "value.converter.schema.registry.ssl.truststore.location": "/var/ssl/private/kafka_connect.truststore.jks",
+    "value.converter.schema.registry.url": "https://cfltreg1.risorse.int:8081"
+  }
+}
